@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filip Folder</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Lexend',sans-serif;background-color:#111;color:#fff;display:flex;flex-direction:column;min-height:100vh;overflow:hidden;}
+header{background-color:#1a1a1a;padding:30px;text-align:center;border-bottom:3px solid #00695c;}
+header h1{font-size:2.5em;margin:0;}
+header h2{font-size:1.2em;font-weight:700;margin-top:8px;}
+main{flex:1;padding:20px;position:relative;z-index:1;display:flex;gap:20px;justify-content:flex-start;align-items:flex-start;}
+aside{width:280px;height:380px;background-color:#1c1c1c;border:2px solid #004d40;border-radius:8px;padding:12px;transition:.3s;z-index:2;display:flex;flex-direction:column;}
+aside:hover{transform:translateY(-5px);box-shadow:0 0 20px rgba(0,77,64,.6);}
+aside h3{text-align:center;margin:0;font-size:1.2em;}
+aside p{font-size:.85em;margin-top:8px;line-height:1.4;}
+aside .input-group{display:flex;align-items:center;margin-top:12px;position:relative;}
+aside input[type="text"]{flex:1;padding:6px 6px 6px 36px;border:1px solid #004d40;border-radius:4px;background-color:#2a2a2a;color:#fff;}
+.folder-icon{position:absolute;left:8px;width:20px;height:14px;background:#fff;border-radius:3px 3px 0 0;}
+.folder-icon::before{content:'';position:absolute;top:-5px;left:0;width:10px;height:5px;background:#fff;border-radius:2px 2px 0 0;}
+.garbage-icon{position:absolute;left:8px;width:16px;height:18px;background:#fff;border-radius:2px;}
+.garbage-icon::before{content:'';position:absolute;top:-5px;left:2px;width:10px;height:4px;background:#fff;border-radius:2px;}
+.garbage-icon::after{content:'';position:absolute;top:2px;left:5px;width:6px;height:10px;background:#1c1c1c;}
+aside button{margin-top:12px;padding:8px;background:#00695c;border:none;border-radius:4px;color:#fff;font-weight:700;cursor:pointer;transition:.3s;}
+aside button:hover{background:#004d40;transform:scale(1.05);}
+.panel{width:420px;background:#1c1c1c;border:2px solid #004d40;border-radius:8px;padding:12px;transition:.3s;z-index:2;display:flex;flex-direction:column;}
+.panel:hover{transform:translateY(-5px);box-shadow:0 0 20px rgba(0,77,64,.6);}
+.panel h3{text-align:center;margin:0;font-size:1.2em;}
+.panel p{text-align:center;margin:8px 0;font-size:.85em;}
+.panel iframe{width:100%;height:240px;border:none;border-radius:8px;}
+footer{background:#1a1a1a;text-align:center;padding:12px;border-top:3px solid #004d40;transition:.3s;z-index:2;}
+footer:hover p{color:#00695c;}
+/* Overlay */
+.overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:999;}
+/* Popup */
+.popup{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.8);background:#1c1c1c;border:2px solid #004d40;border-radius:8px;padding:16px;color:#fff;z-index:1000;text-align:center;width:260px;opacity:0;transition:all .4s ease;}
+.popup.show{display:block;opacity:1;transform:translate(-50%,-50%) scale(1);}
+.popup h4{margin:0;font-size:1.1em;}
+.popup p{margin:8px 0;font-size:.85em;}
+.popup .btn{margin-top:12px;padding:8px 16px;background:#00695c;border:none;border-radius:4px;color:#fff;font-weight:700;cursor:pointer;transition:.3s;}
+.popup .btn:hover{background:#004d40;transform:scale(1.05);}
+.popup .checkmark{font-size:2em;color:#00ff99;margin-bottom:8px;}
+.popup .error{font-size:2em;color:#ff5555;margin-bottom:8px;}
+/* Floating background blobs */
+.background{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;z-index:0;filter:blur(60px);}
+.shape{position:absolute;width:260px;height:260px;background:radial-gradient(circle,#00695c,#004d40);opacity:0.5;border-radius:50%;animation:float 12s infinite ease-in-out alternate;} /* faster */
+.shape:nth-child(1){top:10%;left:15%;animation-delay:0s;}
+.shape:nth-child(2){top:50%;left:70%;animation-delay:5s;}
+.shape:nth-child(3){top:80%;left:30%;animation-delay:10s;}
+@keyframes float{0%{transform:translateY(0) translateX(0) scale(1);}50%{transform:translateY(-40px) translateX(30px) scale(1.1);}100%{transform:translateY(0) translateX(0) scale(1);}}
+</style>
+</head>
+<body>
+<div class="background"><div class="shape"></div><div class="shape"></div><div class="shape"></div></div>
+<header><h1>Filip Folder</h1><h2>Pin accounts with ease, with this brand new PowerShell-based system!</h2></header>
+<main>
+<aside>
+  <h3>Pin Accounts</h3>
+  <p>Paste your player file in the box below, then click "Start Pinning!" If you don't know how to find a user's "player file" then go ahead and watch "How to use".</p>
+  <div class="input-group">
+    <div class="folder-icon"></div>
+    <input id="playerFile" type="text" placeholder="Enter player file">
+  </div>
+  <div class="input-group">
+    <div class="garbage-icon"></div>
+    <input id="cookieFile" type="text" placeholder="Enter person cookie (Optional)">
+  </div>
+  <button onclick="startPinning()">Start Pinning!</button>
+</aside>
+<div class="panel">
+  <h3>How to use</h3>
+  <p>Video Tutorial</p>
+  <iframe src="https://www.youtube.com/embed/2IF0XU1pCZM" allowfullscreen></iframe>
+</div>
+</main>
+<footer><p>&copy; 2025 Filip Folder. All rights reserved.</p></footer>
+
+<!-- Overlay + Popup -->
+<div id="overlay" class="overlay"></div>
+<div id="popup" class="popup">
+  <div id="popupIcon"></div>
+  <h4 id="popupTitle"></h4>
+  <p id="popupDesc"></p>
+  <button id="popupBtn" class="btn" onclick="closePopup()">Close</button>
+</div>
+
+<script>
+function startPinning(){
+  const input=document.getElementById("playerFile").value.trim();
+  const popup=document.getElementById("popup");
+  const overlay=document.getElementById("overlay");
+  const icon=document.getElementById("popupIcon");
+  const title=document.getElementById("popupTitle");
+  const desc=document.getElementById("popupDesc");
+  const btn=document.getElementById("popupBtn");
+
+  if(input.length>15){
+    icon.innerHTML='<div class="checkmark">✔</div>';
+    title.textContent="Go check your Game!";
+    desc.textContent="";
+    btn.textContent="Close";
+  } else {
+    icon.innerHTML='<div class="error">✖</div>';
+    title.textContent="Invalid Check";
+    desc.textContent="Go check if you mispelled or texted incorrectly.";
+    btn.textContent="Try Again";
+  }
+  overlay.style.display="block";
+  popup.classList.add("show");
+}
+function closePopup(){
+  document.getElementById("popup").classList.remove("show");
+  document.getElementById("overlay").style.display="none";
+}
+</script>
+</body>
+</html>
